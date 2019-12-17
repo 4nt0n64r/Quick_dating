@@ -76,6 +76,8 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
+        android:focusable="true"
+        android:foreground="?android:attr/selectableItemBackground"
         android:id="@+id/thin_cv"
         android:layout_width="240dp"
         android:layout_height="240dp"
@@ -91,6 +93,8 @@
 
 
         <ImageView
+            android:focusable="true"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"

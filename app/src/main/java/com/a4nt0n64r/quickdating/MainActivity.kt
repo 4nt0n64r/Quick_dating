@@ -8,17 +8,16 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.view.View.INVISIBLE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.a4nt0n64r.quickdating.fragments.Camera_fragment
-import com.a4nt0n64r.quickdating.fragments.Find
-import com.a4nt0n64r.quickdating.fragments.Internet_error
-import com.a4nt0n64r.quickdating.fragments.Privacy_policy
+import com.a4nt0n64r.quickdating.fragments.*
 import com.a4nt0n64r.quickdating.fragments.answers.Answer_1
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.begin_quiz.card_main
+import kotlinx.android.synthetic.main.main_layout.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,13 +30,33 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.main_layout)
 
-        next_button.setOnClickListener {
-            setFragment(ANSWER_1)
+        writeNumberToSharedPrefs(0)
+
+        if (hasNoPermissions()) {
+            requestPermission()
         }
 
+        accept_tv.setOnClickListener {
+            setFragment(BEGIN_QUIZ)
+        }
 
+        cancel_tv.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    fun writeNumberToSharedPrefs(number: Int) {
+        val myPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val myEditor = myPreferences.edit()
+        myEditor.putInt(NUMBER, number)
+        myEditor.apply()
+    }
+
+    fun readNumberFromSharedPrefs(): Int {
+        val myPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        return myPreferences.getInt(NUMBER, 0)
     }
 
     fun requestPermission() {
@@ -67,8 +86,18 @@ class MainActivity : AppCompatActivity() {
     fun setFragment(fragment: String) {
         if (isNetworkConnected()) {
             when (fragment) {
-                ANSWER_1 -> {
+                BEGIN_QUIZ -> {
                     card_main.visibility = INVISIBLE
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_frame,
+                            Begin_quiz(), BEGIN_QUIZ
+                        )
+                        .addToBackStack(ADD_TO_BACK_STACK)
+                        .commit()
+                }
+                ANSWER_1 -> {
                     supportFragmentManager
                         .beginTransaction()
                         .replace(
@@ -108,36 +137,6 @@ class MainActivity : AppCompatActivity() {
                         .addToBackStack(ADD_TO_BACK_STACK)
                         .commit()
                 }
-                FIND -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(
-                            R.id.fragment_frame,
-                            Find(), FIND
-                        )
-                        .addToBackStack(ADD_TO_BACK_STACK)
-                        .commit()
-                }
-                CAMERA -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(
-                            R.id.fragment_frame,
-                            Camera_fragment(), CAMERA
-                        )
-                        .addToBackStack(ADD_TO_BACK_STACK)
-                        .commit()
-                }
-                POLICY -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(
-                            R.id.fragment_frame,
-                            Privacy_policy(), POLICY
-                        )
-                        .addToBackStack(ADD_TO_BACK_STACK)
-                        .commit()
-                }
                 ERROR -> {
                     supportFragmentManager
                         .beginTransaction()
@@ -164,6 +163,65 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun changeFragmentWithParameter(fragment: String, number: Int = 0) {
+        if (isNetworkConnected()) {
+            when (fragment) {
+                FIND -> {
+                    val frag = Find()
+                    val bundle = Bundle()
+                    bundle.putInt(NUMBER, number)
+                    frag.arguments = bundle
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_frame,
+                            frag, FIND
+                        )
+                        .addToBackStack(ADD_TO_BACK_STACK)
+                        .commit()
+                }
+                CAMERA -> {
+                    val frag = Camera_fragment()
+                    val bundle = Bundle()
+                    bundle.putInt(NUMBER, number)
+                    frag.arguments = bundle
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_frame,
+                            frag, CAMERA
+                        )
+                        .addToBackStack(ADD_TO_BACK_STACK)
+                        .commit()
+                }
+                LOADING_CAMERA -> {
+                    val frag = Loading_camera()
+                    val bundle = Bundle()
+                    bundle.putInt(NUMBER, number)
+                    frag.arguments = bundle
+                    supportFragmentManager
+                        .beginTransaction()
+                        .replace(
+                            R.id.fragment_frame,
+                            frag, LOADING_CAMERA
+                        )
+                        .addToBackStack(ADD_TO_BACK_STACK)
+                        .commit()
+                }
+            }
+        } else {
+            card_main.visibility = INVISIBLE
+            supportFragmentManager
+                .beginTransaction()
+                .replace(
+                    R.id.fragment_frame,
+                    Internet_error(), ERROR
+                )
+                .addToBackStack(ADD_TO_BACK_STACK)
+                .commit()
+        }
+    }
+
     private fun isNetworkConnected(): Boolean {
         val cm =
             getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -173,14 +231,28 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val ADD_TO_BACK_STACK = "ADD_TO_BACK_STACK"
 
+        val BEGIN_QUIZ = "BEGIN_QUIZ"
         val ANSWER_1 = "ANSWER_1"
         val ANSWER_2 = "ANSWER_2"
         val ANSWER_3 = "ANSWER_3"
         val LOADING = "LOADING"
+
         val FIND = "FIND"
-        val POLICY = "POLICY"
         val CAMERA = "CAMERA"
+        val LOADING_CAMERA = "LOADING_CAMERA"
+
+        val NUMBER = "NUMBER"
+
         val ERROR = "ERROR"
+
+        val DEFAULT_NUMBER = 0
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        writeNumberToSharedPrefs(0)
 
     }
 }

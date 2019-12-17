@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment
 import com.a4nt0n64r.quickdating.MainActivity
 import com.a4nt0n64r.quickdating.R
 import kotlinx.android.synthetic.main.camera_layout.*
+import kotlinx.android.synthetic.main.camera_layout.description_tv
+import kotlinx.android.synthetic.main.find.*
+import kotlin.random.Random
 
 
 class Camera_fragment : Fragment() {
@@ -22,6 +25,16 @@ class Camera_fragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        var number = 0
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            number = bundle.getInt(MainActivity.NUMBER)
+        }
+
+        val str = number.toString() + " " + getString(R.string.find_people)
+        description_tv.text = str
 
         camera.setLifecycleOwner(viewLifecycleOwner)
 

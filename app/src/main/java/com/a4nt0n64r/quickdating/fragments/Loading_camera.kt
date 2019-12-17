@@ -1,15 +1,24 @@
+package com.a4nt0n64r.quickdating.fragments
+
+import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import com.a4nt0n64r.quickdating.MainActivity
-import com.a4nt0n64r.quickdating.MainActivity.Companion.DEFAULT_NUMBER
+import com.a4nt0n64r.quickdating.MainActivity.Companion.CAMERA
+import com.a4nt0n64r.quickdating.MainActivity.Companion.NUMBER
+
 import com.a4nt0n64r.quickdating.R
 import kotlinx.android.synthetic.main.a_1.*
+import kotlinx.android.synthetic.main.a_1.back_arrow
+import kotlinx.android.synthetic.main.find.*
+import kotlin.random.Random
 
-class Loading : Fragment() {
+class Loading_camera : Fragment() {
 
     val timerSeconds = 5
     lateinit var timer: CountDownTimer
@@ -19,13 +28,18 @@ class Loading : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.loading_layout, container, false)
+        return inflater.inflate(R.layout.fragment_loading_camera, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         val activity = this.activity as MainActivity
+
+        var number = 0
+        val bundle = this.arguments
+        if (bundle != null) {
+            number = bundle.getInt(NUMBER)
+        }
 
         timer = object : CountDownTimer((timerSeconds * 1000).toLong(), 1000) {
 
@@ -33,7 +47,7 @@ class Loading : Fragment() {
             }
 
             override fun onFinish() {
-                activity.changeFragmentWithParameter(MainActivity.FIND,DEFAULT_NUMBER)
+                activity.changeFragmentWithParameter(CAMERA,number)
             }
         }.start()
 
