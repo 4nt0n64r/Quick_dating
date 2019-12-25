@@ -3,9 +3,9 @@
     <color name="colorPrimary">#ffdf8c</color>
     <color name="colorPrimaryDark">#c59392</color>
     <color name="colorAccent">#FFFFFF</color>
-    <color name="gradient_start">#ffdf8c</color>
-    <color name="gradient_finish">#E81010</color>
-    <color name="color_dark_font">#4F4F4F</color>
+    <color name="gradient_start">#24F8EB</color>
+    <color name="gradient_finish">#0F3FE8</color>
+    <color name="color_dark_font">#0F3FE8</color>
     <color name="color_white">#FFFFFF</color>
     <color name="color_black">#000000</color>
 </resources>

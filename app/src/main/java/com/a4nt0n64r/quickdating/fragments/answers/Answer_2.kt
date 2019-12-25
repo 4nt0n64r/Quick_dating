@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import com.a4nt0n64r.quickdating.MainActivity
 import com.a4nt0n64r.quickdating.R
 import kotlinx.android.synthetic.main.a_1.*
+import kotlinx.android.synthetic.main.a_1.back_arrow
+import kotlinx.android.synthetic.main.a_2.*
 
 class Answer_2 : Fragment() {
 

@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="16dp"
-        android:fontFamily="@font/yeseva_one"
+        android:fontFamily="@font/roboto"
         android:text="Предпочтения"
         android:textColor="@color/cardview_light_background"
         android:textSize="24sp"
@@ -45,10 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
-        android:fontFamily="sans-serif"
+        android:fontFamily="@font/roboto"
         android:text="фигура"
         android:textColor="@color/cardview_light_background"
-        android:textSize="18sp"
+        android:textSize="22sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 

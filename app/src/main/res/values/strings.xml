@@ -1,10 +1,7 @@
 <resources>
-    <string name="app_name">Quick dating</string>
+    <string name="app_name">Quick Dating</string>
     <string name="header_questions">Ответьте\nна ряд вопросов</string>
     <string name="description_questions">чтобы найти максимально подходящего собеседника</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="privacy_text">User Generated Content Policy Responsibility Policy We are committed to responsible behaviour and reserve the right to moderate any user generated content i.e videos/photos before being published on our page. The submitter must have the permission from all individuals which appear or are named in the submission (if any) to use their name and likeness in the submission, to grant their rights set forth herein. The submitter must further make sure that the submission will not infringe any...</string>
     <string name="privacy_header">Privacy Policy</string>
     <string name="find_people">собеседников</string>

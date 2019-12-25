@@ -23,11 +23,6 @@ class Internet_error : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        ok_button.setOnClickListener {
-            val activity = this.activity as MainActivity
-            activity.onBackPressed()
-        }
-
         back_arrow.setOnClickListener {
             val activity = this.activity as MainActivity
             activity.onBackPressed()

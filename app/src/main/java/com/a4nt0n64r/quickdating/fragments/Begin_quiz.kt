@@ -11,7 +11,7 @@ import com.a4nt0n64r.quickdating.R
 import com.a4nt0n64r.quickdating.fragments.answers.Answer_1
 import kotlinx.android.synthetic.main.a_1.back_arrow
 import kotlinx.android.synthetic.main.begin_quiz.*
-import kotlinx.android.synthetic.main.main_layout.*
+import kotlinx.android.synthetic.main.privacy_layout_removed.*
 
 class Begin_quiz : Fragment() {
 

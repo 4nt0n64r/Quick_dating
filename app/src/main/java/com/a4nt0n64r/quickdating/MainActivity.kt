@@ -16,8 +16,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.a4nt0n64r.quickdating.fragments.*
 import com.a4nt0n64r.quickdating.fragments.answers.Answer_1
+import kotlinx.android.synthetic.main.begin_quiz.*
 import kotlinx.android.synthetic.main.begin_quiz.card_main
-import kotlinx.android.synthetic.main.main_layout.*
+import kotlinx.android.synthetic.main.privacy_layout_removed.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.main_layout)
+        setContentView(R.layout.begin_quiz)
 
         writeNumberToSharedPrefs(0)
 
@@ -38,12 +39,8 @@ class MainActivity : AppCompatActivity() {
             requestPermission()
         }
 
-        accept_tv.setOnClickListener {
-            setFragment(BEGIN_QUIZ)
-        }
-
-        cancel_tv.setOnClickListener {
-            onBackPressed()
+        next_button.setOnClickListener {
+            setFragment(ANSWER_1)
         }
     }
 
@@ -86,18 +83,8 @@ class MainActivity : AppCompatActivity() {
     fun setFragment(fragment: String) {
         if (isNetworkConnected()) {
             when (fragment) {
-                BEGIN_QUIZ -> {
-                    card_main.visibility = INVISIBLE
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(
-                            R.id.fragment_frame,
-                            Begin_quiz(), BEGIN_QUIZ
-                        )
-                        .addToBackStack(ADD_TO_BACK_STACK)
-                        .commit()
-                }
                 ANSWER_1 -> {
+                    card_main.visibility = INVISIBLE
                     supportFragmentManager
                         .beginTransaction()
                         .replace(
@@ -231,7 +218,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val ADD_TO_BACK_STACK = "ADD_TO_BACK_STACK"
 
-        val BEGIN_QUIZ = "BEGIN_QUIZ"
+//        val BEGIN_QUIZ = "BEGIN_QUIZ"
         val ANSWER_1 = "ANSWER_1"
         val ANSWER_2 = "ANSWER_2"
         val ANSWER_3 = "ANSWER_3"
