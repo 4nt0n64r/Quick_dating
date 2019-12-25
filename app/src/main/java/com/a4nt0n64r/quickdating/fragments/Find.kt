@@ -48,6 +48,9 @@ class Find : Fragment() {
 
         begin_chat_button.setOnClickListener {
             if (!name_tv.text.isNullOrEmpty()) {
+                if (activity.hasNoPermissions()){
+                    activity.requestPermission()
+                }
                 activity.changeFragmentWithParameter(MainActivity.LOADING_CAMERA, number)
             } else {
                 showSnackbar("Введите имя!")

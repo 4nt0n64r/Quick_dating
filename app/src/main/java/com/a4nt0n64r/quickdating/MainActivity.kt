@@ -35,10 +35,6 @@ class MainActivity : AppCompatActivity() {
 
         writeNumberToSharedPrefs(0)
 
-        if (hasNoPermissions()) {
-            requestPermission()
-        }
-
         next_button.setOnClickListener {
             setFragment(ANSWER_1)
         }
@@ -60,7 +56,7 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, permissions, 0)
     }
 
-    private fun hasNoPermissions(): Boolean {
+    fun hasNoPermissions(): Boolean {
         return ContextCompat.checkSelfPermission(
             this,
             Manifest.permission.CAMERA
